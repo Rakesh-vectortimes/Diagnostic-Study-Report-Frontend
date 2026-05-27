@@ -1,0 +1,117 @@
+<div class="page-header row">
+  <div>
+    <h1>Companies</h1>
+    <p>Manage company records</p>
+  </div>
+  <a mat-flat-button color="primary" routerLink="/companies/create">
+    <mat-icon>add</mat-icon>
+    Add Company
+  </a>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    <div class="filters">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search companies</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [formControl]="searchControl" placeholder="Search by name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select [formControl]="statusControl">
+          <mat-option value="">All</mat-option>
+          @for (status of statusOptions; track status) {
+            <mat-option [value]="status">{{ status | titlecase }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <mat-icon matPrefix>location_on</mat-icon>
+        <mat-select [formControl]="locationControl">
+          <mat-option value="">All</mat-option>
+          @for (location of locationOptions(); track location) {
+            <mat-option [value]="location">{{ location }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="page-size-field">
+        <mat-label>Page Size</mat-label>
+        <mat-select [formControl]="limitControl">
+          @for (limit of limitOptions; track limit) {
+            <mat-option [value]="limit">{{ limit }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-stroked-button type="button" class="clear-btn" (click)="clearFilters()">
+        <mat-icon>filter_alt_off</mat-icon>
+        Clear
+      </button>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="companies()" class="data-table">
+        <ng-container matColumnDef="sno">
+          <th mat-header-cell *matHeaderCellDef>S.No</th>
+          <td mat-cell *matCellDef="let row; let i = index">{{ rowNumber(i) }}</td>
+        </ng-container>
+        <ng-container matColumnDef="company_name">
+          <th mat-header-cell *matHeaderCellDef>Company Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.company_name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef>Location</th>
+          <td mat-cell *matCellDef="let row">{{ row.location }}</td>
+        </ng-container>
+        <ng-container matColumnDef="total_workforce">
+          <th mat-header-cell *matHeaderCellDef>Total Workforce</th>
+          <td mat-cell *matCellDef="let row">{{ row.total_workforce }}</td>
+        </ng-container>
+        <ng-container matColumnDef="shift_operation">
+          <th mat-header-cell *matHeaderCellDef>Shift Operation</th>
+          <td mat-cell *matCellDef="let row">{{ row.shift_operation }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="status-badge" [class.active]="row.status === 'active'">{{ row.status | titlecase }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <a mat-icon-button [routerLink]="['/companies/view', row.id]">
+              <mat-icon>visibility</mat-icon>
+            </a>
+            <a mat-icon-button [routerLink]="['/companies/edit', row.id]">
+              <mat-icon>edit</mat-icon>
+            </a>
+            <button mat-icon-button color="warn" (click)="deleteCompany(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <div class="pagination-bar">
+      <span>Total: {{ total() }}</span>
+      <span>Page {{ page() }} of {{ pages() }}</span>
+      <div class="pagination-actions">
+        <button mat-stroked-button type="button" (click)="previousPage()" [disabled]="page() <= 1">
+          Previous
+        </button>
+        <button mat-stroked-button type="button" (click)="nextPage()" [disabled]="page() >= pages()">
+          Next
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

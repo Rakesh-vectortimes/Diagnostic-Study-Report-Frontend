@@ -1,0 +1,56 @@
+<table class="form-table">
+  <thead>
+    <tr><th>S.No</th><th>Description</th><th>Status</th><th>Value</th><th>Remark</th><th></th></tr>
+  </thead>
+  <tbody>
+    @for (row of array.controls; track $index; let i = $index) {
+      <tr [formGroup]="$any(row)">
+        <td>{{ i + 1 }}</td>
+        <td><input formControlName="description" /></td>
+        <td>
+          <select formControlName="status" (change)="onStatusChange(row)">
+            @for (option of statusOptions; track option.value) {
+              <option [ngValue]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </td>
+        <td><input formControlName="value" [readonly]="!isMeasured(row)" /></td>
+        <td><input formControlName="remark" [readonly]="!isMeasured(row)" /></td>
+        <td class="row-actions">
+          <button mat-icon-button type="button" color="primary" aria-label="Add row" (click)="addRow()">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Move row up"
+            [disabled]="i === 0"
+            (click)="moveRow(i, i - 1)"
+          >
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Move row down"
+            [disabled]="i === array.length - 1"
+            (click)="moveRow(i, i + 1)"
+          >
+            <mat-icon>arrow_downward</mat-icon>
+          </button>
+          <button mat-icon-button type="button" color="warn" aria-label="Delete row" (click)="removeRow(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    }
+    <tr class="total-row">
+      <td colspan="5">Add another delivery performance row</td>
+      <td class="row-actions">
+        <button mat-icon-button type="button" color="primary" aria-label="Add row" (click)="addRow()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

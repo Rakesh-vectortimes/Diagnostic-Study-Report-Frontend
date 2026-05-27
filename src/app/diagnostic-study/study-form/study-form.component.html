@@ -1,0 +1,112 @@
+<div class="page-header row">
+  <div>
+    <h1>{{ isEdit ? 'Edit Diagnostic Study' : 'Create Diagnostic Study' }}</h1>
+  </div>
+  <a mat-stroked-button routerLink="/diagnostic-studies">Back to List</a>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <mat-stepper #stepper [linear]="false" orientation="horizontal" (selectionChange)="onStepSelectionChange($event.selectedIndex)">
+        <mat-step label="Company Background" [stepControl]="companyBackground">
+          <app-company-background [formGroup]="companyBackground"></app-company-background>
+          <div class="step-actions">
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, companyBackground)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Product Volume & Mix" [stepControl]="productVolumeMix">
+          <app-product-volume-mix [parentForm]="form"></app-product-volume-mix>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, productVolumeMix)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Customer Base" [stepControl]="customerBase">
+          <app-customer-base [parentForm]="form"></app-customer-base>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, customerBase)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Market Focus" [stepControl]="marketFocus">
+          <app-market-focus [parentForm]="form"></app-market-focus>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, marketFocus)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Quality Performance" [stepControl]="qualityPerformance">
+          <app-quality-performance [parentForm]="form"></app-quality-performance>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, qualityPerformance)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Cost Performance" [stepControl]="form.get('cost_data')!">
+          <app-cost-performance [parentForm]="form"></app-cost-performance>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, form.get('cost_data')!)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Delivery Performance" [stepControl]="deliveryPerformance">
+          <app-delivery-performance [parentForm]="form"></app-delivery-performance>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, deliveryPerformance)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Process Excellence" [stepControl]="processExcellence">
+          <app-process-excellence [formGroup]="processExcellence"></app-process-excellence>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="nextStep(stepper, processExcellence, true)">Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Preview & Submit">
+          <app-report-preview [studyData]="previewData() || form.getRawValue()" [inline]="true"></app-report-preview>
+          <div class="step-actions submit-actions">
+            <button mat-stroked-button type="button" (click)="saveDraft()">
+              <mat-icon>save</mat-icon> Save Draft
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="submitFinal()">
+              <mat-icon>send</mat-icon> Submit Final
+            </button>
+            <button mat-stroked-button type="button" (click)="exportPdf()">
+              <mat-icon>picture_as_pdf</mat-icon> Export PDF
+            </button>
+            <button mat-stroked-button type="button" (click)="exportWord()">
+              <mat-icon>description</mat-icon> Export Word
+            </button>
+            <button mat-button type="button" (click)="resetForm()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </form>
+  </mat-card-content>
+</mat-card>

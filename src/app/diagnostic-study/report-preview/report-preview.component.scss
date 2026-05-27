@@ -1,0 +1,205 @@
+.report-preview {
+  &.inline .preview-toolbar {
+    display: none;
+  }
+}
+
+.preview-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.report-document {
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.report-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #00838f;
+}
+
+.report-title {
+  font-size: 1.75rem;
+  color: #0d47a1;
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+
+.company-name {
+  color: #00838f;
+  font-size: 1.4rem;
+  margin: 0 0 16px;
+  font-weight: 600;
+}
+
+.report-meta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 0.95rem;
+  color: #546e7a;
+}
+
+.report-section {
+  margin-bottom: 28px;
+
+  h3 {
+    color: #0d47a1;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #b2dfdb;
+  }
+
+  h4 {
+    color: #006064;
+    margin: 16px 0 8px;
+    font-size: 1rem;
+  }
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  thead {
+    background: linear-gradient(135deg, #0d47a1, #00838f);
+    color: #fff;
+
+    th {
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f5fafa;
+  }
+
+  tbody tr:nth-child(odd) {
+    background: #fff;
+  }
+
+  tbody tr.total-row {
+    background: #dff4f2;
+    color: #004d40;
+    font-weight: 700;
+  }
+
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+}
+
+.info-grid p {
+  margin: 6px 0;
+  line-height: 1.6;
+}
+
+.cost-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+
+  p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+  }
+}
+
+.qa-list {
+  display: grid;
+  gap: 12px;
+}
+
+.qa-item {
+  padding: 12px;
+  background: #f5fafa;
+  border-radius: 6px;
+  border-left: 4px solid #00838f;
+
+  strong {
+    display: block;
+    color: #37474f;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+
+  span {
+    color: #546e7a;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .report-document {
+    box-shadow: none;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .report-document {
+    padding: 28px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-document {
+    padding: 18px;
+  }
+
+  .report-title {
+    font-size: 1.45rem;
+  }
+
+  .company-name {
+    font-size: 1.15rem;
+  }
+
+  .report-meta {
+    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .report-section {
+    overflow-x: auto;
+  }
+
+  .report-table {
+    min-width: 680px;
+  }
+
+  .preview-toolbar {
+    button,
+    a {
+      flex: 1 1 140px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .report-document {
+    padding: 12px;
+    border-radius: 0;
+  }
+}

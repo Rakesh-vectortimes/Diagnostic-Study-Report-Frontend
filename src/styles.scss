@@ -1,0 +1,418 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  background: #f5f7fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page-header h1 {
+  color: #0d47a1;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.page-header p {
+  font-size: 1rem;
+}
+
+.data-table {
+  width: 100%;
+
+  th.mat-mdc-header-cell {
+    background: linear-gradient(135deg, #0d47a1, #00838f);
+    color: #fff !important;
+    font-weight: 600;
+    font-size: 0.98rem;
+    padding: 14px 16px;
+  }
+
+  td.mat-mdc-cell {
+    font-size: 0.98rem;
+    padding: 12px 16px;
+  }
+
+  tr.mat-mdc-row:hover {
+    background: rgba(0, 131, 143, 0.06);
+  }
+}
+
+.section-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 8px 16px;
+  padding: 16px 0;
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.array-section {
+  padding: 16px 0;
+
+  button {
+    margin-bottom: 16px;
+  }
+}
+
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+
+  thead {
+    background: #e0f2f1;
+
+    th {
+      padding: 12px;
+      text-align: center;
+      font-weight: 600;
+      color: #006064;
+      font-size: 0.98rem;
+    }
+  }
+
+  tbody td {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+
+    &.row-actions {
+      white-space: nowrap;
+
+      button {
+        margin-bottom: 0;
+      }
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #cfd8dc;
+      border-radius: 4px;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: #00838f;
+      }
+
+      &[readonly] {
+        background: #f5f5f5;
+      }
+
+      &:disabled {
+        background: #f5f5f5;
+        color: #78909c;
+        cursor: not-allowed;
+      }
+
+      &.ng-invalid.ng-touched {
+        border-color: #c62828;
+        background: #fff8f8;
+      }
+    }
+  }
+
+  .total-row {
+    background: #e0f2f1;
+    font-weight: 700;
+    color: #004d40;
+
+    td {
+      padding: 10px 6px;
+      border-top: 2px solid #00838f;
+    }
+  }
+}
+
+.head-count-table {
+  font-size: 0.98rem;
+}
+
+.form-table {
+  .header-with-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .info-icon {
+    cursor: help;
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    color: #00838f;
+  }
+}
+
+.product-volume-table {
+  thead th {
+    text-align: center;
+  }
+}
+
+.subsection-title {
+  color: #006064;
+  margin: 20px 0 12px;
+  font-size: 1.15rem;
+}
+
+.cost-data-grid,
+.questionnaire-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 8px 16px;
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.process-excellence-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  padding: 16px 0;
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.process-question {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+
+  label {
+    color: #006064;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  mat-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cfd8dc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+}
+
+.mat-mdc-form-field {
+  font-size: 1rem;
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+  font-size: 0.98rem;
+}
+
+.mat-mdc-card-title {
+  font-size: 1.2rem;
+}
+
+.improvement-project-table {
+  margin-top: 8px;
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: #2e7d32;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #c62828;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.snackbar-info {
+  --mdc-snackbar-container-color: #0277bd;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+@media (max-width: 1024px) {
+  html,
+  body {
+    font-size: 15px;
+  }
+
+  .page-header {
+    gap: 12px;
+
+    h1 {
+      font-size: 1.75rem;
+    }
+  }
+
+  .data-table {
+    min-width: 760px;
+
+    th.mat-mdc-header-cell,
+    td.mat-mdc-cell {
+      padding: 12px;
+      font-size: 0.95rem;
+    }
+  }
+
+  .section-form,
+  .cost-data-grid,
+  .questionnaire-grid,
+  .process-excellence-form {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .form-table {
+    min-width: 760px;
+  }
+
+  .mat-horizontal-content-container {
+    padding: 0 12px 12px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    font-size: 14px;
+  }
+
+  .page-header,
+  .row {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+
+  .page-header h1 {
+    font-size: 1.55rem;
+  }
+
+  mat-card {
+    border-radius: 8px !important;
+  }
+
+  .mat-mdc-card-content {
+    padding: 14px !important;
+  }
+
+  .section-form,
+  .cost-data-grid,
+  .questionnaire-grid,
+  .process-excellence-form {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .process-question {
+    padding: 10px;
+
+    mat-radio-group {
+      gap: 10px;
+    }
+  }
+
+  .step-actions,
+  .form-actions,
+  .submit-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+
+    button,
+    a {
+      flex: 1 1 140px;
+    }
+  }
+
+  .mat-horizontal-stepper-header-container {
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .mat-horizontal-stepper-header {
+    min-width: 112px !important;
+    padding: 0 10px !important;
+  }
+
+  .mat-step-label {
+    font-size: 0.85rem;
+  }
+
+  .form-table {
+    display: block;
+    overflow-x: auto;
+    min-width: 680px;
+    white-space: nowrap;
+  }
+
+  .form-table tbody td input,
+  .form-table tbody td select {
+    min-width: 110px;
+  }
+
+  .data-table {
+    min-width: 720px;
+  }
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .mat-mdc-card-content {
+    padding: 10px !important;
+  }
+
+  .step-actions,
+  .form-actions,
+  .submit-actions {
+    button,
+    a {
+      flex-basis: 100%;
+    }
+  }
+
+  .form-table {
+    min-width: 620px;
+  }
+}

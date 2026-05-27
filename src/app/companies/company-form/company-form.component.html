@@ -1,0 +1,175 @@
+<div class="page-header">
+  <h1>{{ isEdit ? 'Edit Company' : 'Add Company' }}</h1>
+</div>
+
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      @if (currentPage === 'basic') {
+        <section class="form-page">
+          <h2>Basic Info</h2>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Company Name</mat-label>
+              <input matInput formControlName="company_name" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Legal or registered company name">info</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="location" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Company office or site address">info</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Contact Person</mat-label>
+              <input matInput formControlName="contact_person" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Primary person to contact at the company">info</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Mail ID</mat-label>
+              <input matInput type="email" maxlength="100" formControlName="mail_id" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Official contact email address">info</mat-icon>
+              @if (form.controls.mail_id.hasError('required')) {
+                <mat-error>Mail ID is required</mat-error>
+              } @else if (form.controls.mail_id.hasError('email') || form.controls.mail_id.hasError('pattern')) {
+                <mat-error>Enter valid email address</mat-error>
+              } @else if (form.controls.mail_id.hasError('maxlength')) {
+                <mat-error>Mail ID cannot exceed 100 characters</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Contact Phone Number</mat-label>
+              <input matInput type="tel" maxlength="10" inputmode="numeric" formControlName="contact_phone_number" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Primary contact phone number">info</mat-icon>
+              @if (form.controls.contact_phone_number.hasError('required')) {
+                <mat-error>Contact number is required</mat-error>
+              } @else if (form.controls.contact_phone_number.hasError('pattern')) {
+                <mat-error>Enter valid 10 digit mobile number</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Whatsapp Number</mat-label>
+              <input matInput type="tel" maxlength="10" inputmode="numeric" formControlName="whatsapp_number" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Whatsapp number for company communication">info</mat-icon>
+              @if (form.controls.whatsapp_number.hasError('required')) {
+                <mat-error>Whatsapp number is required</mat-error>
+              } @else if (form.controls.whatsapp_number.hasError('pattern')) {
+                <mat-error>Enter valid 10 digit Whatsapp number</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Currency</mat-label>
+              <mat-select formControlName="currency">
+                @for (currency of currencies; track currency) {
+                  <mat-option [value]="currency">{{ currency }}</mat-option>
+                }
+              </mat-select>
+              <mat-icon matSuffix class="info-icon" matTooltip="Currency used for this company">info</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                @for (s of statuses; track s) {
+                  <mat-option [value]="s">{{ s | titlecase }}</mat-option>
+                }
+              </mat-select>
+              <mat-icon matSuffix class="info-icon" matTooltip="Whether the company is active or inactive">info</mat-icon>
+            </mat-form-field>
+          </div>
+        </section>
+      } @else {
+        <section class="form-page">
+          <h2>Main Info</h2>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Total Head Count</mat-label>
+              <input matInput type="number" formControlName="total_workforce" />
+              <mat-icon
+                matSuffix
+                class="info-icon"
+                matTooltip="Total manpower that includes everyone from CEO to security"
+              >
+                info
+              </mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Shift Operation</mat-label>
+              <input matInput type="number" formControlName="shift_operation" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Number of shifts, such as 1 shift or 2 shifts">
+                info
+              </mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Working Hours</mat-label>
+              <input matInput formControlName="working_hours" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Working hours in a week">info</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Working Days</mat-label>
+              <input matInput type="number" formControlName="working_days" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Annual working days divided by 12">info</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>No of Sewing Lines</mat-label>
+              <input matInput type="number" formControlName="sewing_lines" />
+              <mat-icon matSuffix class="info-icon" matTooltip="Total number of sewing lines in the facility">info</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Production System</mat-label>
+              <mat-select formControlName="production_system">
+                @for (system of productionSystems; track system) {
+                  <mat-option [value]="system.value">{{ system.label }}</mat-option>
+                }
+              </mat-select>
+              <mat-icon matSuffix class="info-icon" matTooltip="Select Preparatory & Assembly or Only Assembly">
+                info
+              </mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Inventory Type</mat-label>
+              <mat-select formControlName="inventory_type">
+                @for (type of inventoryTypes; track type) {
+                  <mat-option [value]="type.value">{{ type.label }}</mat-option>
+                }
+              </mat-select>
+              <mat-icon matSuffix class="info-icon" matTooltip="Bundle system, manual UPS, or hanger UPS">
+                info
+              </mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Workstation Type</mat-label>
+              <mat-select formControlName="workstation_type">
+                @for (type of workstationTypes; track type) {
+                  <mat-option [value]="type.value">{{ type.label }}</mat-option>
+                }
+              </mat-select>
+              <mat-icon matSuffix class="info-icon" matTooltip="Whether workstation operation is sitting or standing">
+                info
+              </mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Line Configuration</mat-label>
+              <mat-select formControlName="line_configuration">
+                @for (configuration of lineConfigurations; track configuration) {
+                  <mat-option [value]="configuration.value">{{ configuration.label }}</mat-option>
+                }
+              </mat-select>
+              <mat-icon matSuffix class="info-icon" matTooltip="Sewing, finishing, and packing line configuration">
+                info
+              </mat-icon>
+            </mat-form-field>
+          </div>
+        </section>
+      }
+
+      <div class="form-actions">
+        @if (currentPage === 'basic') {
+          <button mat-flat-button color="primary" type="button" (click)="goToMainInfo()">Next</button>
+        } @else {
+          <button mat-stroked-button type="button" (click)="goToBasicInfo()">Back</button>
+          <button mat-flat-button color="primary" type="submit">{{ isEdit ? 'Update' : 'Create' }}</button>
+        }
+        <a mat-stroked-button routerLink="/companies">Cancel</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

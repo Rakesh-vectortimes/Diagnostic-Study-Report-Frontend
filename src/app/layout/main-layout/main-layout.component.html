@@ -1,0 +1,29 @@
+<div class="layout-container">
+  <app-header (menuToggle)="toggleSidenav()"></app-header>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      [mode]="'side'"
+      [opened]="sidenavOpen()"
+      class="app-sidenav desktop-sidenav"
+    >
+      <app-sidebar [collapsed]="!sidenavOpen()"></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav
+      [mode]="'over'"
+      [opened]="mobileOpen()"
+      (closedStart)="closeMobile()"
+      class="app-sidenav mobile-sidenav"
+    >
+      <app-sidebar (navClick)="closeMobile()"></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content class="main-content">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+      <footer class="app-footer">
+        <span>2026 © Vector Consultancy.</span>
+        <span class="footer-version">V 3.0</span>
+      </footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

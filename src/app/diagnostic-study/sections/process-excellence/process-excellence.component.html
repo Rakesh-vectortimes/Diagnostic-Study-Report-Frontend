@@ -1,0 +1,191 @@
+<div [formGroup]="formGroup()" class="process-excellence-form">
+  <div class="process-question">
+    <label>1. Do you measure Standard Time?</label>
+    <mat-radio-group formControlName="measure_standard_time">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="process-question">
+    <label>2. Do you measure Planned Cut Date (PCD) performance?</label>
+    <mat-radio-group formControlName="measure_pcd">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="process-question">
+    <label>3. Are you interested in automation of processes?</label>
+    <mat-radio-group formControlName="interested_automation">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="process-question">
+    <label>4. Do you have Industrial Engineering / Operation Excellence Department?</label>
+    <mat-radio-group formControlName="ie_department">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="process-question">
+    <label>5. Do you have Lean Belt certified professionals in the organization?</label>
+    <mat-radio-group formControlName="lean_belt_professionals">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+    @if (isYes('lean_belt_professionals')) {
+      <select formControlName="lean_belt_level">
+        <option value="">Select belt level</option>
+        @for (level of leanBeltLevels; track level.value) {
+          <option [ngValue]="level.value">{{ level.label }}</option>
+        }
+      </select>
+    }
+  </div>
+
+  <div class="process-question">
+    <label>6. Do you track individual operator performance?</label>
+    <mat-radio-group formControlName="track_operator_performance">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="process-question">
+    <label>7. Do you have Training School for operators / Supervisor?</label>
+    <mat-radio-group formControlName="training_school">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="process-question">
+    <label>8. Do you have certification of 5S?</label>
+    <mat-radio-group formControlName="five_s_certification">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+    @if (isYes('five_s_certification')) {
+      <select formControlName="five_s_level">
+        <option value="">Select 5S level</option>
+        @for (level of fiveSLevels; track level.value) {
+          <option [ngValue]="level.value">{{ level.label }}</option>
+        }
+      </select>
+    }
+  </div>
+
+  <div class="process-question">
+    <label>9. Do you have incentive system in the factory?</label>
+    <mat-radio-group formControlName="incentive_system">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+    @if (isYes('incentive_system')) {
+      <app-rich-text-editor
+        class="full-width"
+        label="Brief incentive information"
+        formControlName="incentive_details"
+      ></app-rich-text-editor>
+    }
+  </div>
+
+  <div class="process-question full-width">
+    <label>10. Do you have 1 year plan for improvement?</label>
+    <mat-radio-group formControlName="one_year_plan">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+    @if (isYes('one_year_plan')) {
+      <table class="form-table improvement-project-table">
+        <thead>
+          <tr>
+            <th>Sr No</th>
+            <th>Project</th>
+            <th>Current Performance</th>
+            <th>Goal</th>
+            <th>Completion Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of improvementProjects.controls; track $index; let i = $index) {
+            <tr [formGroup]="$any(row)">
+              <td>{{ i + 1 }}</td>
+              <td><input formControlName="project" /></td>
+              <td><input formControlName="current_performance" /></td>
+              <td><input formControlName="goal" /></td>
+              <td><input type="date" formControlName="completion_date" /></td>
+              <td class="row-actions">
+                <button mat-icon-button type="button" color="primary" aria-label="Add project row" (click)="addProject()">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Move project row up"
+                  [disabled]="i === 0"
+                  (click)="moveProject(i, i - 1)"
+                >
+                  <mat-icon>arrow_upward</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Move project row down"
+                  [disabled]="i === improvementProjects.length - 1"
+                  (click)="moveProject(i, i + 1)"
+                >
+                  <mat-icon>arrow_downward</mat-icon>
+                </button>
+                <button mat-icon-button type="button" color="warn" aria-label="Delete project row" (click)="removeProject(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          }
+          <tr class="total-row">
+            <td colspan="5">Add another improvement project</td>
+            <td class="row-actions">
+              <button mat-icon-button type="button" color="primary" aria-label="Add project row" (click)="addProject()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    }
+  </div>
+
+  <div class="process-question">
+    <label>11. Have you ever practiced Lean Manufacturing Tools &amp; Technique?</label>
+    <mat-radio-group formControlName="lean_tools_practiced">
+      <mat-radio-button value="yes">Yes</mat-radio-button>
+      <mat-radio-button value="no">No</mat-radio-button>
+    </mat-radio-group>
+    @if (isYes('lean_tools_practiced')) {
+      <select formControlName="lean_practice_details">
+        <option value="">Select practice method</option>
+        @for (method of leanPracticeMethods; track method.value) {
+          <option [ngValue]="method.value">{{ method.label }}</option>
+        }
+      </select>
+    }
+  </div>
+
+  <app-rich-text-editor
+    class="full-width"
+    label="Pain areas"
+    formControlName="pain_areas"
+  ></app-rich-text-editor>
+
+  <app-rich-text-editor
+    class="full-width"
+    label="Improvement expected"
+    formControlName="improvements_expected"
+  ></app-rich-text-editor>
+</div>

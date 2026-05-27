@@ -1,0 +1,53 @@
+@import '../company-list/company-list.component.scss';
+
+.detail-section {
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h2 {
+    color: #0f4d8f;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  padding: 0;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .label {
+    font-size: 0.8rem;
+    color: #78909c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  span:last-child {
+    font-size: 1.05rem;
+    color: #263238;
+    font-weight: 500;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

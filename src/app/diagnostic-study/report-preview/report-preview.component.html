@@ -1,0 +1,255 @@
+<div class="report-preview" [class.inline]="inline()">
+  @if (!inline()) {
+    <div class="preview-toolbar no-print">
+      <a mat-stroked-button routerLink="/diagnostic-studies">Back</a>
+      <button mat-flat-button color="primary" (click)="exportPdf()">
+        <mat-icon>picture_as_pdf</mat-icon> Export PDF
+      </button>
+      <button mat-stroked-button (click)="exportWord()">
+        <mat-icon>description</mat-icon> Export Word
+      </button>
+      <button mat-stroked-button onclick="window.print()">
+        <mat-icon>print</mat-icon> Print
+      </button>
+    </div>
+  }
+
+  <div class="report-document">
+    <header class="report-header">
+      <h1 class="report-title">Diagnostic Study Report</h1>
+      <h2 class="company-name">{{ companyName() }}</h2>
+      <div class="report-meta">
+        <span><strong>Prepared by:</strong> {{ preparedBy() }}</span>
+        <span><strong>Date:</strong> {{ ($any(bg()['report_date']) | date: 'longDate') || 'N/A' }}</span>
+        <span><strong>Analysis Period:</strong> {{ display(bg()['analysis_period']) }}</span>
+      </div>
+    </header>
+
+    <section class="report-section">
+      <h3>1. Company Background</h3>
+      <div class="info-grid">
+        <p><strong>Introduction:</strong> <span [innerHTML]="display(bg()['company_introduction'])"></span></p>
+        <p><strong>Location:</strong> {{ display(bg()['location']) }}</p>
+        <p><strong>Total Workforce:</strong> {{ display(bg()['total_workforce']) }}</p>
+        <p><strong>Shift Operation:</strong> {{ display(bg()['shift_operation']) }}</p>
+        <p><strong>Working Hours:</strong> {{ display(bg()['working_hours']) }}</p>
+        <p><strong>Working Days:</strong> {{ display(bg()['working_days']) }}</p>
+      </div>
+    </section>
+
+    <section class="report-section">
+      <h3>2. Product Volume &amp; Mix</h3>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Product Category</th>
+            <th>Annual Volume</th>
+            <th>% Volume</th>
+            <th>Annual Value</th>
+            <th>% Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of arr('product_volume_mix'); track $index; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ display(row['product_category']) }}</td>
+              <td>{{ display(row['annual_volume']) }}</td>
+              <td>{{ percentFor('product_volume_mix', 'annual_volume', row['annual_volume']) }}%</td>
+              <td>{{ display(row['annual_value']) }}</td>
+              <td>{{ percentFor('product_volume_mix', 'annual_value', row['annual_value']) }}%</td>
+            </tr>
+          }
+          <tr class="total-row">
+            <td>{{ arr('product_volume_mix').length + 1 }}</td>
+            <td>Total</td>
+            <td>{{ totalFor('product_volume_mix', 'annual_volume') }}</td>
+            <td>{{ percentTotalFor('product_volume_mix', 'annual_volume') }}%</td>
+            <td>{{ totalFor('product_volume_mix', 'annual_value') }}</td>
+            <td>{{ percentTotalFor('product_volume_mix', 'annual_value') }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="report-section">
+      <h3>3. Customer Base</h3>
+      <table class="report-table">
+        <thead>
+          <tr><th>S.No</th><th>Customer Name</th><th>Annual Volume</th><th>% Volume</th></tr>
+        </thead>
+        <tbody>
+          @for (row of arr('customer_base'); track $index; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ display(row['customer_name']) }}</td>
+              <td>{{ display(row['annual_volume']) }}</td>
+              <td>{{ display(row['volume_percent']) }}%</td>
+            </tr>
+          }
+          <tr class="total-row">
+            <td>{{ arr('customer_base').length + 1 }}</td>
+            <td>Total</td>
+            <td>{{ totalFor('customer_base', 'annual_volume') }}</td>
+            <td>{{ percentTotalFor('customer_base', 'annual_volume') }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="report-section">
+      <h3>4. Market Focus</h3>
+      <table class="report-table">
+        <thead>
+          <tr><th>S.No</th><th>Market Focus</th><th>Volume</th><th>% Volume</th></tr>
+        </thead>
+        <tbody>
+          @for (row of arr('market_focus'); track $index; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ display(row['market_focus']) }}</td>
+              <td>{{ display(row['volume']) }}</td>
+              <td>{{ display(row['volume_percent']) }}%</td>
+            </tr>
+          }
+          <tr class="total-row">
+            <td>{{ arr('market_focus').length + 1 }}</td>
+            <td>Total</td>
+            <td>{{ totalFor('market_focus', 'volume') }}</td>
+            <td>{{ percentTotalFor('market_focus', 'volume') }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="report-section">
+      <h3>5. Quality Performance</h3>
+      <table class="report-table">
+        <thead>
+          <tr><th>Description</th><th>Status</th><th>Value</th><th>Remark</th></tr>
+        </thead>
+        <tbody>
+          @for (row of arr('quality_performance'); track $index) {
+            <tr>
+              <td>{{ display(row['description']) }}</td>
+              <td>{{ performanceStatusLabel(row['status']) }}</td>
+              <td>{{ display(row['value']) }}</td>
+              <td>{{ display(row['remark']) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section class="report-section">
+      <h3>6. Cost Performance</h3>
+      <h4>Head Count Data</h4>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>S.No</th><th>Department</th><th>Helpers</th><th>Operators</th><th>Supervisor / Staff</th><th>Executive</th><th>Checkers</th><th>Manager</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of arr('head_count_data'); track $index; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ display(row['department']) }}</td>
+              <td>{{ display(row['helpers']) }}</td>
+              <td>{{ display(row['operators'] || row['workers']) }}</td>
+              <td>{{ display(row['supervisor']) }}</td>
+              <td>{{ display(row['executive']) }}</td>
+              <td>{{ display(row['checkers']) }}</td>
+              <td>{{ display(row['manager']) }}</td>
+            </tr>
+          }
+          <tr class="total-row">
+            <td>{{ arr('head_count_data').length + 1 }}</td>
+            <td>Total</td>
+            <td>{{ totalFor('head_count_data', 'helpers') }}</td>
+            <td>{{ totalFor('head_count_data', 'operators') }}</td>
+            <td>{{ totalFor('head_count_data', 'supervisor') }}</td>
+            <td>{{ totalFor('head_count_data', 'executive') }}</td>
+            <td>{{ totalFor('head_count_data', 'checkers') }}</td>
+            <td>{{ totalFor('head_count_data', 'manager') }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Cost Data</h4>
+      <div class="cost-summary">
+        <p><strong>Avg operator salary:</strong> {{ display(cost()['avg_operator_salary']) }}</p>
+        <p><strong>Direct salary total:</strong> {{ display(cost()['total_direct_salary']) }}</p>
+        <p><strong>Indirect salary total:</strong> {{ display(cost()['total_indirect_salary']) }}</p>
+        <p><strong>Overheads:</strong> {{ display(cost()['total_overheads']) }}</p>
+        <p><strong>Operating expenses:</strong> {{ display(cost()['operating_expenses']) }}</p>
+        <p><strong>Monthly output:</strong> {{ display(cost()['avg_monthly_output']) }}</p>
+        <p><strong>Cost/pc:</strong> {{ display(cost()['cost_per_pc']) }}</p>
+        <p><strong>Cost/min:</strong> {{ display(cost()['cost_per_min']) }}</p>
+        <p><strong>Factory efficiency:</strong> {{ display(cost()['factory_efficiency']) }}</p>
+        <p><strong>Productivity/person/day:</strong> {{ display(cost()['productivity_per_person']) }}</p>
+      </div>
+    </section>
+
+    <section class="report-section">
+      <h3>7. Delivery Performance</h3>
+      <table class="report-table">
+        <thead>
+          <tr><th>S.No</th><th>Description</th><th>Status</th><th>Value</th><th>Remark</th></tr>
+        </thead>
+        <tbody>
+          @for (row of arr('delivery_performance'); track $index; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ display(row['description']) }}</td>
+              <td>{{ performanceStatusLabel(row['status']) }}</td>
+              <td>{{ display(row['value']) }}</td>
+              <td>{{ display(row['remark']) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section class="report-section">
+      <h3>8. Process Excellence</h3>
+      <div class="qa-list">
+        @for (field of processFields(); track field.key) {
+          <div class="qa-item">
+            <strong>{{ field.label }}</strong>
+            @if (field.rich) {
+              <span [innerHTML]="display(process()[field.key])"></span>
+            } @else {
+              <span>{{ formatProcessValue(process()[field.key], field.enumType) }}</span>
+            }
+          </div>
+        }
+      </div>
+      @if (processProjects().length) {
+        <h4>1 Year Improvement Projects</h4>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Project</th>
+              <th>Current Performance</th>
+              <th>Goal</th>
+              <th>Completion Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (project of processProjects(); track $index; let i = $index) {
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ display(project['project']) }}</td>
+                <td>{{ display(project['current_performance']) }}</td>
+                <td>{{ display(project['goal']) }}</td>
+                <td>{{ display(project['completion_date']) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </section>
+  </div>
+</div>

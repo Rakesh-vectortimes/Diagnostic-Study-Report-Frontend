@@ -1,0 +1,35 @@
+@import '../../companies/company-list/company-list.component.scss';
+
+.step-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.submit-actions {
+  flex-wrap: wrap;
+}
+
+:host ::ng-deep {
+  .mat-stepper-horizontal {
+    background: transparent;
+  }
+}
+
+@media (max-width: 768px) {
+  .step-actions {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep {
+    .mat-step-icon {
+      height: 22px;
+      width: 22px;
+      font-size: 0.75rem;
+    }
+  }
+}

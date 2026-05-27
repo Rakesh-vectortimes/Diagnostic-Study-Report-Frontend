@@ -1,0 +1,73 @@
+<div class="page-header">
+  <h1>Dashboard</h1>
+  <p>Overview of diagnostic study reports</p>
+</div>
+
+<div class="stats-grid">
+  <mat-card class="stat-card">
+    <mat-icon>business</mat-icon>
+    <div class="stat-value">{{ stats().totalCompanies }}</div>
+    <div class="stat-label">Total Companies</div>
+  </mat-card>
+  <mat-card class="stat-card">
+    <mat-icon>assignment</mat-icon>
+    <div class="stat-value">{{ stats().totalStudies }}</div>
+    <div class="stat-label">Total Diagnostic Studies</div>
+  </mat-card>
+  <mat-card class="stat-card draft">
+    <mat-icon>edit_note</mat-icon>
+    <div class="stat-value">{{ stats().draftReports }}</div>
+    <div class="stat-label">Draft Reports</div>
+  </mat-card>
+  <mat-card class="stat-card completed">
+    <mat-icon>check_circle</mat-icon>
+    <div class="stat-value">{{ stats().completedReports }}</div>
+    <div class="stat-label">Completed Reports</div>
+  </mat-card>
+</div>
+
+<mat-card class="table-card">
+  <mat-card-header>
+    <mat-card-title>Recent Diagnostic Reports</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="recentStudies()" class="data-table">
+      <ng-container matColumnDef="company_name">
+        <th mat-header-cell *matHeaderCellDef>Company</th>
+        <td mat-cell *matCellDef="let row">{{ row.company_name || '—' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="prepared_by">
+        <th mat-header-cell *matHeaderCellDef>Prepared By</th>
+        <td mat-cell *matCellDef="let row">{{ row.prepared_by || '—' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let row">
+          <span class="status-chip" [class]="row.status">{{ row.status | titlecase }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="report_date">
+        <th mat-header-cell *matHeaderCellDef>Report Date</th>
+        <td mat-cell *matCellDef="let row">{{ row.report_date | date: 'mediumDate' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let row">
+          <a mat-icon-button [routerLink]="['/diagnostic-studies/preview', row.id]">
+            <mat-icon>visibility</mat-icon>
+          </a>
+          <a mat-icon-button [routerLink]="['/diagnostic-studies/edit', row.id]">
+            <mat-icon>edit</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell empty-row" [attr.colspan]="displayedColumns.length">
+          No recent reports found.
+        </td>
+      </tr>
+    </table>
+  </mat-card-content>
+</mat-card>

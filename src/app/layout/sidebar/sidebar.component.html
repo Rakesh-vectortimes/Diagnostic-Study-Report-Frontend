@@ -1,0 +1,27 @@
+<nav class="sidebar-nav">
+  <div class="sidebar-logo" [class.collapsed]="collapsed()">
+    <img src="/vectorlogo.png" alt="Vector logo" />
+  </div>
+  <mat-nav-list>
+    @for (item of navItems; track item.route) {
+      <a
+        mat-list-item
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+        (click)="onNav()"
+      >
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        @if (!collapsed()) {
+          <span matListItemTitle>{{ item.label }}</span>
+        }
+      </a>
+    }
+    <a mat-list-item class="logout-item" (click)="logout()">
+      <mat-icon matListItemIcon>logout</mat-icon>
+      @if (!collapsed()) {
+        <span matListItemTitle>Logout</span>
+      }
+    </a>
+  </mat-nav-list>
+</nav>

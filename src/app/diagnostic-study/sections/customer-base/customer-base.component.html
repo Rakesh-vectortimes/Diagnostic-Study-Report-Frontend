@@ -1,0 +1,54 @@
+<div class="array-section">
+  <table class="form-table">
+    <thead>
+      <tr><th>S.No</th><th>Customer Name</th><th>Annual Volume</th><th>% of Volume</th><th></th></tr>
+    </thead>
+    <tbody>
+      @for (row of array.controls; track $index; let i = $index) {
+        <tr [formGroup]="$any(row)">
+          <td>{{ i + 1 }}</td>
+          <td><input formControlName="customer_name" /></td>
+          <td><input formControlName="annual_volume" (input)="recalc()" /></td>
+          <td><input formControlName="volume_percent" readonly /></td>
+          <td class="row-actions">
+            <button mat-icon-button type="button" color="primary" aria-label="Add row" (click)="addRow()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              type="button"
+              aria-label="Move row up"
+              [disabled]="i === 0"
+              (click)="moveRow(i, i - 1)"
+            >
+              <mat-icon>arrow_upward</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              type="button"
+              aria-label="Move row down"
+              [disabled]="i === array.length - 1"
+              (click)="moveRow(i, i + 1)"
+            >
+              <mat-icon>arrow_downward</mat-icon>
+            </button>
+            <button mat-icon-button type="button" color="warn" (click)="removeRow(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      }
+      <tr class="total-row">
+        <td>{{ array.length + 1 }}</td>
+        <td>Total</td>
+        <td>{{ total('annual_volume') }}</td>
+        <td>{{ percentTotal() }}</td>
+        <td class="row-actions">
+          <button mat-icon-button type="button" color="primary" aria-label="Add row" (click)="addRow()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

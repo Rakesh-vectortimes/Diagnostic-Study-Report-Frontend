@@ -1,0 +1,18 @@
+<mat-toolbar class="app-header">
+  <button mat-icon-button class="menu-btn" (click)="menuToggle.emit()" aria-label="Toggle menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-title">Diagnostic Study Report Management</span>
+  <span class="spacer"></span>
+  @if (auth.currentUser(); as user) {
+    <a class="user-info" routerLink="/profile" aria-label="Open profile">
+      <mat-icon>person</mat-icon>
+      <span class="user-name">{{ user.name }}</span>
+      <span class="user-role">{{ user.role | titlecase }}</span>
+    </a>
+  }
+  <button mat-stroked-button color="primary" (click)="logout()" class="logout-btn">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</mat-toolbar>

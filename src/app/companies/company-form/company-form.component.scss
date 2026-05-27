@@ -1,0 +1,50 @@
+@import '../../dashboard/dashboard.component.scss';
+
+.form-page h2 {
+  color: #0f4d8f;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+  padding-top: 16px;
+}
+
+.info-icon {
+  color: #607d8b;
+  cursor: help;
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-wrap: wrap;
+
+    button,
+    a {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 641px) {
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}

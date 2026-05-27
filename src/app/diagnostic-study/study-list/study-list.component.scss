@@ -1,0 +1,77 @@
+@import '../../companies/company-list/company-list.component.scss';
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.filters mat-form-field {
+  width: 220px;
+}
+
+.filters .search-field {
+  width: 300px;
+}
+
+.page-size-field {
+  width: 130px !important;
+}
+
+.clear-btn {
+  margin-top: 6px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+  padding-top: 16px;
+  color: #455a64;
+  font-size: 0.9rem;
+}
+
+.pagination-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    gap: 10px;
+  }
+
+  .filters mat-form-field,
+  .filters .search-field,
+  .page-size-field {
+    width: 100% !important;
+  }
+
+  .pagination-bar {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pagination-actions {
+    width: 100%;
+
+    button {
+      flex: 1;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .clear-btn {
+    width: 100%;
+    margin-top: 0;
+  }
+}

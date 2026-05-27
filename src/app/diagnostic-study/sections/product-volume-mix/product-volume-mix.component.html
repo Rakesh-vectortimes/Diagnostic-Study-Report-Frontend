@@ -1,0 +1,77 @@
+<div class="array-section">
+  <table class="form-table product-volume-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Product Category</th>
+        <th>Annual Volume</th>
+        <th>% of Volume</th>
+        <th>
+          <span class="header-with-info">
+            Annual Value
+            <mat-icon
+              class="info-icon"
+              matTooltip=" pieces, dozen, or pairs."
+              aria-label="Annual value unit information"
+            >
+              info
+            </mat-icon>
+          </span>
+        </th>
+        <th>% of Value</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of array.controls; track $index; let i = $index) {
+        <tr [formGroup]="$any(row)">
+          <td>{{ i + 1 }}</td>
+          <td><input formControlName="product_category" (blur)="recalc()" /></td>
+          <td><input formControlName="annual_volume" (input)="recalc()" /></td>
+          <td><input formControlName="volume_percent" readonly /></td>
+          <td><input formControlName="annual_value" (input)="recalc()" /></td>
+          <td><input formControlName="value_percent" readonly /></td>
+          <td class="row-actions">
+            <button mat-icon-button type="button" color="primary" aria-label="Add row" (click)="addRow()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              type="button"
+              aria-label="Move row up"
+              [disabled]="i === 0"
+              (click)="moveRow(i, i - 1)"
+            >
+              <mat-icon>arrow_upward</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              type="button"
+              aria-label="Move row down"
+              [disabled]="i === array.length - 1"
+              (click)="moveRow(i, i + 1)"
+            >
+              <mat-icon>arrow_downward</mat-icon>
+            </button>
+            <button mat-icon-button type="button" color="warn" (click)="removeRow(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      }
+      <tr class="total-row">
+        <td>{{ array.length + 1 }}</td>
+        <td>Total</td>
+        <td>{{ total('annual_volume') }}</td>
+        <td>{{ percentTotal('annual_volume') }}</td>
+        <td>{{ total('annual_value') }}</td>
+        <td>{{ percentTotal('annual_value') }}</td>
+        <td class="row-actions">
+          <button mat-icon-button type="button" color="primary" aria-label="Add row" (click)="addRow()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

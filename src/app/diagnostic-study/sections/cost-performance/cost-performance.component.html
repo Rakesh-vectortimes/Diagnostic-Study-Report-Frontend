@@ -1,0 +1,155 @@
+<h3 class="subsection-title">A. Head Count Data</h3>
+<table class="form-table head-count-table">
+  <thead>
+    <tr>
+      <th>
+        <span class="header-with-info">
+          S.No
+          <mat-icon class="info-icon" matTooltip="Serial number for the row.">info</mat-icon>
+        </span>
+      </th>
+      <th>
+        <span class="header-with-info">
+          Department
+          <mat-icon class="info-icon" matTooltip="Factory department or work area.">info</mat-icon>
+        </span>
+      </th>
+      <th>
+        <span class="header-with-info">
+          Helpers
+          <mat-icon class="info-icon" matTooltip="Number of helpers in this department.">info</mat-icon>
+        </span>
+      </th>
+      <th>
+        <span class="header-with-info">
+          Operators
+          <mat-icon class="info-icon" matTooltip="Number of operators in this department.">info</mat-icon>
+        </span>
+      </th>
+      <th>
+        <span class="header-with-info">
+          Supervisor / Staff
+          <mat-icon class="info-icon" matTooltip="Number of supervisors or staff in this department.">info</mat-icon>
+        </span>
+      </th>
+      <th>
+        <span class="header-with-info">
+          Executive
+          <mat-icon class="info-icon" matTooltip="Number of executives in this department.">info</mat-icon>
+        </span>
+      </th>
+      <th>
+        <span class="header-with-info">
+          Checkers
+          <mat-icon class="info-icon" matTooltip="Number of checkers in this department.">info</mat-icon>
+        </span>
+      </th>
+      <th>
+        <span class="header-with-info">
+          Manager
+          <mat-icon class="info-icon" matTooltip="Number of managers in this department.">info</mat-icon>
+        </span>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of headCountArray.controls; track $index; let i = $index) {
+      <tr [formGroup]="$any(row)">
+        <td>{{ i + 1 }}</td>
+        <td><input formControlName="department" /></td>
+        <td><input formControlName="helpers" /></td>
+        <td><input formControlName="operators" /></td>
+        <td><input formControlName="supervisor" /></td>
+        <td><input formControlName="executive" /></td>
+        <td><input formControlName="checkers" /></td>
+        <td><input formControlName="manager" /></td>
+        <td class="row-actions">
+          <button mat-icon-button type="button" color="primary" aria-label="Add head count row" (click)="addHeadCountRow()">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Move head count row up"
+            [disabled]="i === 0"
+            (click)="moveHeadCountRow(i, i - 1)"
+          >
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Move head count row down"
+            [disabled]="i === headCountArray.length - 1"
+            (click)="moveHeadCountRow(i, i + 1)"
+          >
+            <mat-icon>arrow_downward</mat-icon>
+          </button>
+          <button mat-icon-button type="button" color="warn" aria-label="Delete head count row" (click)="removeHeadCountRow(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    }
+    <tr class="total-row">
+      <td>{{ headCountArray.length + 1 }}</td>
+      <td>Total</td>
+      <td>{{ total('helpers') }}</td>
+      <td>{{ total('operators') }}</td>
+      <td>{{ total('supervisor') }}</td>
+      <td>{{ total('executive') }}</td>
+      <td>{{ total('checkers') }}</td>
+      <td>{{ total('manager') }}</td>
+      <td class="row-actions">
+        <button mat-icon-button type="button" color="primary" aria-label="Add head count row" (click)="addHeadCountRow()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="subsection-title">B. Cost Data</h3>
+<div [formGroup]="costDataGroup" class="cost-data-grid">
+  <mat-form-field appearance="outline">
+    <mat-label>Avg salary of operator / month</mat-label>
+    <input matInput type="number" formControlName="avg_operator_salary" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Total monthly salary (direct)</mat-label>
+    <input matInput type="number" formControlName="total_direct_salary" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Total monthly salary (indirect)</mat-label>
+    <input matInput type="number" formControlName="total_indirect_salary" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Total overheads</mat-label>
+    <input matInput type="number" formControlName="total_overheads" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Operating expenses / month</mat-label>
+    <input matInput type="number" formControlName="operating_expenses" readonly />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Average monthly output</mat-label>
+    <input matInput type="number" formControlName="avg_monthly_output" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Cost / pc</mat-label>
+    <input matInput type="number" formControlName="cost_per_pc" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Cost / min</mat-label>
+    <input matInput type="number" formControlName="cost_per_min" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Factory efficiency</mat-label>
+    <input matInput type="number" formControlName="factory_efficiency" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Productivity / person / day</mat-label>
+    <input matInput type="number" formControlName="productivity_per_person" readonly />
+  </mat-form-field>
+</div>
